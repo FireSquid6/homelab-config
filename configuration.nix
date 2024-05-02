@@ -17,9 +17,6 @@
 
   services.tailscale.enable = true;
 
-  # hardware.bluetooth.enable = true;
-  # hardware.bluetooth.powerOnBoot = true;
-
   virtualisation.docker.enable = true;
   virtualisation.docker.rootless = {
     enable = true;
@@ -29,45 +26,11 @@
   virtualisation.virtualbox.host.enable = true;
   users.extraGroups.vboxusers.members = [ "firesquid" ];
 
-  hardware.bluetooth.enable = true;
-  hardware.bluetooth.powerOnBoot = true;
-  services.blueman.enable = true;
-
   services.passSecretService.enable = true; # not as cool as it sounds
   services.gnome.gnome-keyring.enable = true;
 
-  services.logind = {
-    lidSwitch = "suspend";
-    lidSwitchDocked = "suspend";
-    lidSwitchExternalPower = "suspend";
-    powerKey = "poweroff";
-  };
-
   programs.fish.enable = true;
   programs.nix-ld.enable = true;
-
-  services.flatpak.enable = true;
-  xdg.portal.enable = true;
-  xdg.portal.config.common.default = "gtk";
-  xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
-
-  xdg.mime.defaultApplications = {
-    "text/html" = "firefox.desktop";
-    "image/gif" = "firefox.desktop";
-    "image/png" = "firefox.desktop";
-    "image/jpeg" = "firefox.desktop";
-    "x-scheme-handler/http" = "firefox.desktop";
-    "x-scheme-handler/https" = "firefox.desktop";
-    "x-scheme-handler/about" = "firefox.desktop";
-    "x-scheme-handler/unknown" = "firefox.desktop";
-    "text/plain" = "neovide.desktop";
-  };
-  xdg.mime.enable = true;
-
-  sound.enable = true;
-  nixpkgs.config.pulseaudio = true;
-  hardware.pulseaudio.enable = true;
-  hardware.pulseaudio.support32Bit = true;
 
   nixpkgs.config.permittedInsecurePackages = [
     "electron-25.9.0"
@@ -75,44 +38,7 @@
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
-  programs.hyprland = {
-    enable = true;
-    xwayland.enable = true;
-  };
-
   hardware.keyboard.zsa.enable = true;
-
-  services.xserver = {
-    enable = true;
-
-    displayManager = {
-      defaultSession = "none+i3";
-      sddm.enable = true;
-    };
-
-    desktopManager.plasma5.enable = true;
-
-    windowManager.i3 = {
-      enable = true;
-      extraPackages = with pkgs; [
-        dmenu
-        i3status
-        i3blocks
-        i3lock-color
-      ];
-    };
-  };
-
-  environment.plasma5.excludePackages = with pkgs.libsForQt5; [
-    elisa
-    gwenview
-    okular
-    oxygen
-    khelpcenter
-    konsole
-    plasma-browser-integration
-    print-manager
-  ];
 
   # Bootloader.
   boot.initrd.kernelModules = [ "i915" ];
@@ -182,19 +108,6 @@
     ];
   };
 
-  home-manager = {
-    extraSpecialArgs = { inherit inputs; };
-    users = {
-      "firesquid" = import ./home.nix;
-    };
-  };
-
-  qt = {
-    enable = true;
-    platformTheme = "gnome";
-    style = "adwaita-dark";
-  };
-
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
@@ -208,47 +121,23 @@
 
     vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     wget
-    firefox
     killall
     git
     tailscale
-    xclip
-    playerctl
     fish
     neovim
-    swww
-    rofi-wayland
     kitty
     unzip
-    lxappearance
-    feh
     lazygit
-    brightnessctl
     gh
     direnv
-    xss-lock
     starship
-    waybar
-    flameshot
-    watershot
-    simplescreenrecorder
-    gnome-icon-theme
-    papirus-icon-theme
     htop
     ripgrep
     docker
-    picom
-    polybar
-    libsForQt5.sddm-kcm
-    libnotify
-
-    # python stuff
     python3
     python311Packages.pip
-
     nodejs_20
-    home-manager
-    hyprlock
   ];
 
   fonts.packages = with pkgs; [
