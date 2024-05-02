@@ -1,0 +1,4 @@
+#!/bin/sh
+
+cd ~/Dropbox/notes
+nvim index.norg
